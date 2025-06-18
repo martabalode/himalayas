@@ -2,9 +2,61 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.write("Welcome to your expedition to the Himalayas! 🏔️") 
-st.write("Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
-st.image('climbing everest.jpg', caption="This could be you", use_container_width=True)
+### Making all text white 
+st.markdown("""
+    <style>
+    /* Make all paragraph text white */
+    .stApp {
+        color: white;
+    }
+    </style>
+""", unsafe_allow_html=True)
+### Getting a background
+import base64
+
+# Function to load and encode image
+def load_image(path):
+    with open(path, "rb") as img:
+        return base64.b64encode(img.read()).decode()
+
+# Function to apply image as background
+def background_image_style(path):
+    encoded = load_image(path)
+    return f"""
+    <style>
+    .stApp {{
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                          url("data:image/png;base64,{encoded}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+
+# Apply background image
+st.markdown(background_image_style("climbing everest.jpg"), unsafe_allow_html=True)
+# Add text as title with specific features
+st.markdown("""
+    <h2 style='text-align: center; color: #FFFFFF; font-family: Georgia;'>
+        Welcome to your expedition to the Himalayas! 🏔️
+    </h2>
+""", unsafe_allow_html=True)
+
+st.markdown("<h3 style='color: white; font-family: Georgia;'>Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.</h3>", unsafe_allow_html=True)
+
+#st.image('climbing everest.jpg', caption="This could be you", use_container_width=True)
+
+## Change color to text input 
+st.markdown("""
+    <style>
+    label {
+        color: white !important;
+        font-weight: bold;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 age = st.text_input("How old are you?")
 try:
