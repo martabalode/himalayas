@@ -192,20 +192,20 @@ peak_filter = pd.read_csv("peak_filter.csv")
 # function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
 
 def success_func(difficulty):
-  df = peak_filter.copy()
-  df['success_cat'] = pd.qcut(
+    df = peak_filter.copy()
+    df['success_cat'] = pd.qcut(
                            df['success_rate'],
                            q=4,
                            labels=[1, 2, 3, 4],
                            duplicates="drop"
                            )
-  return df[df['success_cat'] == difficulty][["pkname"]]
+    return df[df['success_cat'] == difficulty][["pkname"]]
 
 # Function to filter the peak list based on the category and the max_height_prediction
 
 def filter(max_height_prediction, difficulty): 
-  df = peak_filter.copy()
-  filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(difficulty)["pkname"]))] \
+    df = peak_filter.copy()
+    filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(difficulty)["pkname"]))] \
                 .sort_values(by="nb_members", ascending=False) \
                 .head(3)  \
                  [["peakid", "pkname", "heightm", "death_rate"]]
