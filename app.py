@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import joblib 
 import pickle 
+import sys
+
+st.write("Python version:", sys.version)
 
 st.write("Welcome to your expedition to the Himalayas! Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
 
