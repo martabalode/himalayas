@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib 
+import pickle 
 
 st.write("Welcome to your expedition to the Himalayas! Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
 
@@ -184,7 +185,7 @@ new_data = pd.DataFrame({
 
 # Here we need to run model 1 to get max_height
 
-maxheight = joblib.load('max_height_full_pipeline.pkl')
+maxheight = pickle.load('max_height_full_pipeline.pkl')
 max_height_prediction = maxheight.predict(new_data)
 
 st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
