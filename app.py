@@ -194,7 +194,7 @@ encoder = load('encoder.joblib')
 model = load('model.joblib')
 
 new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
-new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number))
+new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
 
 new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
 
