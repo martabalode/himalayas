@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib 
+from joblib import load
 import pickle 
 import sys
 
@@ -187,8 +188,15 @@ new_data = pd.DataFrame({
 })
 
 # Here we need to run model 1 to get max_height
-maxheight = joblib.load('max_height_full_pipeline.pkl')
-max_height_prediction = maxheight.predict(new_data)
+
+scaler = load('scaler.joblib')
+encoder = load('encoder.joblib')
+model = load('model.joblib')
+
+max_height_prediction = model.predict(new_data)
+
+#maxheight = joblib.load('max_height_full_pipeline.pkl')
+#max_height_prediction = maxheight.predict(new_data)
 
 st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
 
