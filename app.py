@@ -237,7 +237,7 @@ new_data = pd.DataFrame({
 # Concating peakid to new_data -> returning it as data_to_model_2
 
 data_to_model_2 = pd.concat([new_data.iloc[[0]]] * 3, ignore_index=True)
-peakid_var = filter(max_height_prediction, difficulty).reset_index()
+peakid_var = filter_output.reset_index()
 data_to_model_2["peakid"] = peakid_var["peakid"]
 
 #st.write(country_max_height)
