@@ -274,10 +274,7 @@ new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
 
 new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
 
-max_height_prediction = float(model.predict(new_data_scaled)[0])
-
-#maxheight = joblib.load('max_height_full_pipeline.pkl')
-#max_height_prediction = maxheight.predict(new_data)
+max_height_prediction = int(model.predict(new_data_scaled)[0])
 
 st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
 
