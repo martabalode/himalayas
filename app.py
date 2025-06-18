@@ -209,27 +209,18 @@ def filter(max_height_prediction, difficulty):
                 .sort_values(by="nb_members", ascending=False) \
                 .head(3)  \
                  [["peakid", "pkname", "heightm", "death_rate"]]
-  if len(filter_output) != 0:           # maybe only return filter output and handle results with < 3 rows outside the function 
     return filter_output
-  else:
-    return "No peaks match the selected criteria"
+
+# storing output as a variable
 
 filter_output = filter(max_height_prediction, difficulty)
 
-# 3 peaks (or less) returned by the function containing ["peakid", "pkname", "heightm", "death_rate"]
+# Dealing with results with less than 3 outputs
 
-if len(filter_output) == 1:
-    peak_1 = filter_output.iloc[[0]]
-elif len(filter_output) == 2:
-    peak_1 = filter_output.iloc[[0]]
-    peak_2 = filter_output.iloc[[1]]
-elif len(filter_output) == 3:
-    peak_1 = filter_output.iloc[[0]]
-    peak_2 = filter_output.iloc[[1]]
-    peak_3 = filter_output.iloc[[2]]
-else:
-    "No peaks match the selected criteria"
-
+#if len(filter_output) != 0:           
+#    filter_output
+#else:
+#    st.write("No peaks match the selected criteria")
 
 #  Definition of new data for model 2
 
