@@ -3,3 +3,4 @@ joblib
 streamlit
 numpy
 scikit-learn
+pickle
