@@ -348,3 +348,13 @@ if st.button("🚀 Confirm and Continue"):
     success_prob2 = success_prob[1]
     success_prob3 = success_prob[2]
     st.write(f'{success_prob1}, {success_prob2}, {success_prob3}')
+    
+    st.write(f"According to our analysis you will be able to climb up to:")
+    [col1] = st.columns(1)
+    col1.metric("Prediction", max_height_prediction, "meters")
+    st.write(f"According to our analysis you can climb: ")
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("death_1", "Peak1", success_prob1)
+    col2.metric("death_2", "Peak2", success_prob2)
+    col3.metric("death_3", "Peak3", success_prob3)
