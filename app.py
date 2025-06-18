@@ -185,6 +185,52 @@ new_data = pd.DataFrame({
 
 st.write(f"According to our analysis you will be able to climb up to {output_model_1} meters!")
 
+# -- Filter -- 
+
+peak_filter = pd.read_csv("peak_filter.csv")
+
+# function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
+
+def success_func(difficulty):
+  df = peak_filter.copy()
+  df['success_cat'] = pd.qcut(
+                           df['success_rate'],
+                           q=4,
+                           labels=[1, 2, 3, 4],
+                           duplicates="drop"
+                           )
+  return df[df['success_cat'] == difficulty][["pkname"]]
+
+# Function to filter the peak list based on the category and the max_height_prediction
+
+def filter(max_height_prediction, difficulty): 
+  df = peak_filter.copy()
+  filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(difficulty)["pkname"]))] \
+                .sort_values(by="nb_members", ascending=False) \
+                .head(3)  \
+                 [["peakid", "pkname", "heightm", "death_rate"]]
+  if len(filter_output) != 0:           # maybe only return filter output and handle results with < 3 rows outside the function 
+    return filter_output
+  else:
+    return "No peaks match the selected criteria"
+
+filter_output = filter(max_height_prediction, difficulty)
+
+# 3 peaks (or less) returned by the function containing ["peakid", "pkname", "heightm", "death_rate"]
+
+if len(filter_output) == 1:
+    peak_1 = filter_output.iloc[[0]]
+elif len(filter_output) == 2:
+    peak_1 = filter_output.iloc[[0]]
+    peak_2 = filter_output.iloc[[1]]
+elif len(filter_output) == 3:
+    peak_1 = filter_output.iloc[[0]]
+    peak_2 = filter_output.iloc[[1]]
+    peak_3 = filter_output.iloc[[2]]
+else:
+    "No peaks match the selected criteria"
+
+
 #  Definition of new data for model 2
 
 new_data = pd.DataFrame({
@@ -194,7 +240,13 @@ new_data = pd.DataFrame({
     'mo2used': [o2used],
     'nb_members': [nb_members],
     'pct_hired': [pct_hired],
-    'age': [age],
-    'peakid': []
+    'age': [age]
 })
+
+# Concating peakid to new_data -> returning it as data_to_model_2
+
+data_to_model_2 = pd.concat([new_data.iloc[[0]]] * 3, ignore_index=True)
+peakid_var = filter(max_height_prediction, difficulty).reset_index()
+data_to_model_2["peakid"] = peakid_var["peakid"]
+
 #st.write(country_max_height)
