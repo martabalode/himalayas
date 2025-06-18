@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.write("Welcome to your expedition to the Himalayas! Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
+st.write("Welcome to your expedition to the Himalayas! 🏔️") 
+st.write("Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
+st.image('climbing everest.jpg', caption="This could be you", use_container_width=True)
 
 age = st.text_input("How old are you?")
 try:
@@ -10,9 +12,21 @@ try:
 except:
     #st.error("Please make sure that you only enter a number")
     st.stop()
-nb_members = int(st.text_input("How many people will join the expedition?"))
-nb_hired = int(st.text_input("How many of those are hired staff?"))
+
+nb_members = st.text_input("How many people will join the expedition?")
+try:
+    nb_members = int(nb_members)
+except:
+    st.stop()
+
+nb_hired = st.text_input("How many of those are hired staff?")
+try:
+    nb_hired = int(nb_hired)
+except:
+    st.stop()
+
 pct_hired= int(nb_hired)/int(nb_members)
+
 
 season_list = ["Spring", "Summer", "Autumn", "Winter"]
 with st.container(border=True):
