@@ -251,86 +251,89 @@ def get_highest_peak(country):
         return peak.values[0]
 country_max_height = get_highest_peak(country)
 
-# Definition of new data for model 1 
-
-new_data = pd.DataFrame({
-    'mseason': [season],
-    'sex': [sex],
-    'country_max_height': [country_max_height],
-    'mo2used': [o2used],
-    'nb_members': [nb_members],
-    'pct_hired': [pct_hired],
-    'age': [age],
-})
-
-# Here we need to run model 1 to get max_height
-
-scaler = load('scaler.joblib')
-encoder = load('encoder (1).joblib')
-model = load('model.joblib')
-
-new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
-new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
-
-new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
-
-max_height_prediction = int(model.predict(new_data_scaled)[0])
-
-st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
-
-# -- Filter -- 
-
-peak_filter = pd.read_csv("peak_filter.csv", index_col=0)
-
-# function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
-
-def success_func(user_diff_cat):
-    df = peak_filter.copy()
-    df['success_cat'] = pd.qcut(
-                           df['success_rate'],
-                           q=4,
-                           labels=[1, 2, 3, 4],
-                           duplicates="drop"
-                           )
-    return df[df['success_cat'] == user_diff_cat][["pkname"]]
-
-# Function to filter the peak list based on the category and the max_height_prediction
-
-def filter(max_height_prediction, user_diff_cat): 
-    df = peak_filter.copy()
-    filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(user_diff_cat)["pkname"]))] \
-                .sort_values(by="nb_members", ascending=False) \
-                .head(3)  \
-                 [["peakid", "pkname", "heightm", "death_rate"]]
-    return filter_output
-
-# storing output as a variable
-
-filter_output = filter(max_height_prediction, user_diff_cat)
-
-# Dealing with results with less than 3 outputs
-
-#if len(filter_output) != 0:           
-#    filter_output
-#else:
-#    st.write("No peaks match the selected criteria")
-
-#  Definition of new data for model 2
-
-new_data = pd.DataFrame({
-    'mseason': [season],
-    'sex': [sex],
-    'country_max_height': [country_max_height],
-    'mo2used': [o2used],
-    'nb_members': [nb_members],
-    'pct_hired': [pct_hired],
-    'age': [age]
-})
-
-# Concating peakid to new_data -> returning it as data_to_model_2
-
-data_to_model_2 = pd.concat([new_data.iloc[[0]]] * 3, ignore_index=True)
-peakid_var = filter_output.reset_index()
-data_to_model_2["peakid"] = peakid_var["peakid"]
-
-#st.write(country_max_height)
+if st.button("🚀 Confirm and Continue"):
+    # Only run this after the button is clicked
+    st.write("Thanks! Processing your inputs...")
+    # Definition of new data for model 1 
+    
+    new_data = pd.DataFrame({
+        'mseason': [season],
+        'sex': [sex],
+        'country_max_height': [country_max_height],
+        'mo2used': [o2used],
+        'nb_members': [nb_members],
+        'pct_hired': [pct_hired],
+        'age': [age],
+    })
+    
+    # Here we need to run model 1 to get max_height
+    
+    scaler = load('scaler.joblib')
+    encoder = load('encoder (1).joblib')
+    model = load('model.joblib')
+    
+    new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
+    new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
+    
+    new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
+    
+    max_height_prediction = int(model.predict(new_data_scaled)[0])
+    
+    st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
+    
+    # -- Filter -- 
+    
+    peak_filter = pd.read_csv("peak_filter.csv", index_col=0)
+    
+    # function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
+    
+    def success_func(user_diff_cat):
+        df = peak_filter.copy()
+        df['success_cat'] = pd.qcut(
+                               df['success_rate'],
+                               q=4,
+                               labels=[1, 2, 3, 4],
+                               duplicates="drop"
+                               )
+        return df[df['success_cat'] == user_diff_cat][["pkname"]]
+    
+    # Function to filter the peak list based on the category and the max_height_prediction
+    
+    def filter(max_height_prediction, user_diff_cat): 
+        df = peak_filter.copy()
+        filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(user_diff_cat)["pkname"]))] \
+                    .sort_values(by="nb_members", ascending=False) \
+                    .head(3)  \
+                     [["peakid", "pkname", "heightm", "death_rate"]]
+        return filter_output
+    
+    # storing output as a variable
+    
+    filter_output = filter(max_height_prediction, user_diff_cat)
+    
+    # Dealing with results with less than 3 outputs
+    
+    #if len(filter_output) != 0:           
+    #    filter_output
+    #else:
+    #    st.write("No peaks match the selected criteria")
+    
+    #  Definition of new data for model 2
+    
+    new_data = pd.DataFrame({
+        'mseason': [season],
+        'sex': [sex],
+        'country_max_height': [country_max_height],
+        'mo2used': [o2used],
+        'nb_members': [nb_members],
+        'pct_hired': [pct_hired],
+        'age': [age]
+    })
+    
+    # Concating peakid to new_data -> returning it as data_to_model_2
+    
+    data_to_model_2 = pd.concat([new_data.iloc[[0]]] * 3, ignore_index=True)
+    peakid_var = filter_output.reset_index()
+    data_to_model_2["peakid"] = peakid_var["peakid"]
+    
+    #st.write(country_max_height)
