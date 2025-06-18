@@ -184,8 +184,9 @@ new_data = pd.DataFrame({
 })
 
 # Here we need to run model 1 to get max_height
+with open("max_height_full_pipeline.pkl", "rb") as f:
+    maxheight = pickle.load(f)
 
-maxheight = pickle.load('max_height_full_pipeline.pkl')
 max_height_prediction = maxheight.predict(new_data)
 
 st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
