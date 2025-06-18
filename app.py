@@ -71,9 +71,10 @@ except:
     #st.error("Please make sure that you only enter a number")
     st.stop()
 
-nb_members = st.text_input("How many people will join the expedition?")
+
+nb_total = st.text_input("How many people will join the expedition?")
 try:
-    nb_members = int(nb_members)
+    nb_total = int(nb_total)
 except:
     st.stop()
 
@@ -83,7 +84,9 @@ try:
 except:
     st.stop()
 
-pct_hired= int(nb_hired)/int(nb_members)
+
+pct_hired= int(nb_hired)/int(nb_total)
+nb_members = int(nb_total) - int(nb_hired)
 
 
 season_list = ["Spring", "Summer", "Autumn", "Winter"]
@@ -101,10 +104,17 @@ if o2 == "Yes":
 if o2 == "No":
     o2used = 0
 
-difficulty_list = ["Easy","Medium", "Hard" ]
+difficulty_list = ["Easy","Medium", "Hard", "Extreme" ]
 with st.container(border=True):
     difficulty = st.selectbox ("Difficulty level", difficulty_list)
-# Here we need to define the categories with the ranges defined by Diogo
+if difficulty == "Easy":
+    user_diff_cat = 1
+if difficulty == "Medium":
+    user_diff_cat = 2
+if difficulty == "Hard":
+    user_diff_cat = 3
+if difficulty == "Extreme":
+    user_diff_cat = 4
 
 Country = ['Other',
  'Afghanistan',
@@ -271,6 +281,43 @@ max_height_prediction = float(model.predict(new_data_scaled)[0])
 
 st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
 
+# -- Filter -- 
+
+peak_filter = pd.read_csv("peak_filter.csv", index_col=0)
+
+# function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
+
+def success_func(user_diff_cat):
+    df = peak_filter.copy()
+    df['success_cat'] = pd.qcut(
+                           df['success_rate'],
+                           q=4,
+                           labels=[1, 2, 3, 4],
+                           duplicates="drop"
+                           )
+    return df[df['success_cat'] == user_diff_cat][["pkname"]]
+
+# Function to filter the peak list based on the category and the max_height_prediction
+
+def filter(max_height_prediction, user_diff_cat): 
+    df = peak_filter.copy()
+    filter_output = df[(df.heightm <= max_height_prediction) & (df.pkname.isin(success_func(user_diff_cat)["pkname"]))] \
+                .sort_values(by="nb_members", ascending=False) \
+                .head(3)  \
+                 [["peakid", "pkname", "heightm", "death_rate"]]
+    return filter_output
+
+# storing output as a variable
+
+filter_output = filter(max_height_prediction, user_diff_cat)
+
+# Dealing with results with less than 3 outputs
+
+#if len(filter_output) != 0:           
+#    filter_output
+#else:
+#    st.write("No peaks match the selected criteria")
+
 #  Definition of new data for model 2
 
 new_data = pd.DataFrame({
@@ -280,7 +327,13 @@ new_data = pd.DataFrame({
     'mo2used': [o2used],
     'nb_members': [nb_members],
     'pct_hired': [pct_hired],
-    'age': [age],
-    'peakid': []
+    'age': [age]
 })
+
+# Concating peakid to new_data -> returning it as data_to_model_2
+
+data_to_model_2 = pd.concat([new_data.iloc[[0]]] * 3, ignore_index=True)
+peakid_var = filter_output.reset_index()
+data_to_model_2["peakid"] = peakid_var["peakid"]
+
 #st.write(country_max_height)
