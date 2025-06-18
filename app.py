@@ -349,12 +349,55 @@ if st.button("🚀 Confirm and Continue"):
     success_prob3 = success_prob[2]
     st.write(f'{success_prob1}, {success_prob2}, {success_prob3}')
     
-    st.write(f"According to our analysis you will be able to climb up to:")
-    [col1] = st.columns(1)
-    col1.metric("Prediction", max_height_prediction, "meters")
+    
     st.write(f"According to our analysis you can climb: ")
     
+    ### Printing output, we will just need to feed the labels with the right variables 
+
+    label_1 = "death_peak_1"
+    main_1 = "name_peak_1"
+    note_1 = "success_peak_1"
+    note_1_1 = "height_peak_1"
+    
+    label_2 = "death_peak_2"
+    main_2 = "name_peak_2"
+    note_2 = "success_peak_2"
+    note_2_1 = "height_peak_2"
+    
+    label_3 = "death_peak_3"
+    main_3 = "name_peak_3"
+    note_3 = "success_peak_3"
+    note_3_1 = "height_peak_3"
+    
+    # Display in columns
     col1, col2, col3 = st.columns(3)
-    col1.metric("death_1", "Peak1", success_prob1)
-    col2.metric("death_2", "Peak2", success_prob2)
-    col3.metric("death_3", "Peak3", success_prob3)
+    
+    # First column
+    col1.markdown(f"""
+        <div style='text-align: center; line-height: 1.2;'>
+            <div style='color: red;'>{label_1}</div>
+            <div style='color: white; font-size: 28px; font-weight: bold;'>{main_1}</div>
+            <div style='color: white;'>{note_1_1}meters</div>
+            <div style='color: green; font-size: 22px;'>{note_1}</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Second column
+    col2.markdown(f"""
+        <div style='text-align: center; line-height: 1.2;'>
+            <div style='color: red;'>{label_2}</div>
+            <div style='color: white; font-size: 28px; font-weight: bold;'>{main_2}</div>
+            <div style='color: white;'>{note_2_1}meters</div>
+            <div style='color: green; font-size: 22px;'>{note_2}</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Third column
+    col3.markdown(f"""
+        <div style='text-align: center; line-height: 1.2;'>
+            <div style='color: red;'>{label_3}</div>
+            <div style='color: white; font-size: 28px; font-weight: bold;'>{main_3}</div>
+            <div style='color: white;'>{note_3_1}meters</div>
+            <div style='color: green; font-size: 22px;'>{note_3}</div>
+        </div>
+    """, unsafe_allow_html=True)
