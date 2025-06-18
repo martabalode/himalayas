@@ -193,7 +193,12 @@ scaler = load('scaler.joblib')
 encoder = load('encoder.joblib')
 model = load('model.joblib')
 
-max_height_prediction = model.predict(new_data)
+new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
+new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number))
+
+new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
+
+max_height_prediction = model.predict(new_data_scaled)
 
 #maxheight = joblib.load('max_height_full_pipeline.pkl')
 #max_height_prediction = maxheight.predict(new_data)
