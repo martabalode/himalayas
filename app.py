@@ -1,8 +1,68 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import joblib 
+from joblib import load
+import pickle 
+import sys
 
-st.write("Welcome to your expedition to the Himalayas! Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.")
+
+
+### Making all text white 
+st.markdown("""
+    <style>
+    /* Make all paragraph text white */
+    .stApp {
+        color: white;
+    }
+    </style>
+""", unsafe_allow_html=True)
+### Getting a background
+import base64
+
+# Function to load and encode image
+def load_image(path):
+    with open(path, "rb") as img:
+        return base64.b64encode(img.read()).decode()
+
+# Function to apply image as background
+def background_image_style(path):
+    encoded = load_image(path)
+    return f"""
+    <style>
+    .stApp {{
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                          url("data:image/png;base64,{encoded}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+
+# Apply background image
+st.markdown(background_image_style("climbing everest.jpg"), unsafe_allow_html=True)
+# Add text as title with specific features
+st.markdown("""
+    <h2 style='text-align: center; color: #FFFFFF; font-family: Georgia;'>
+        Welcome to your expedition to the Himalayas! 🏔️
+    </h2>
+""", unsafe_allow_html=True)
+
+st.markdown("<h3 style='color: white; font-family: Georgia;'>Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.</h3>", unsafe_allow_html=True)
+
+#st.image('climbing everest.jpg', caption="This could be you", use_container_width=True)
+
+## Change color to text input 
+st.markdown("""
+    <style>
+    label {
+        color: white !important;
+        font-weight: bold;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 age = st.text_input("How old are you?")
 try:
@@ -10,10 +70,24 @@ try:
 except:
     #st.error("Please make sure that you only enter a number")
     st.stop()
-nb_total = int(st.text_input("How many people will join the expedition?"))
-nb_hired = int(st.text_input("How many of those are hired staff?"))
-pct_hired= int(nb_hired)/int(nb_members)
+
+
+nb_total = st.text_input("How many people will join the expedition?")
+try:
+    nb_total = int(nb_total)
+except:
+    st.stop()
+
+nb_hired = st.text_input("How many of those are hired staff?")
+try:
+    nb_hired = int(nb_hired)
+except:
+    st.stop()
+
+
+pct_hired= int(nb_hired)/int(nb_total)
 nb_members = int(nb_total) - int(nb_hired)
+
 
 season_list = ["Spring", "Summer", "Autumn", "Winter"]
 with st.container(border=True):
@@ -191,7 +265,21 @@ new_data = pd.DataFrame({
 
 # Here we need to run model 1 to get max_height
 
-st.write(f"According to our analysis you will be able to climb up to {output_model_1} meters!")
+scaler = load('scaler.joblib')
+encoder = load('encoder (1).joblib')
+model = load('model.joblib')
+
+new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
+new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
+
+new_data_scaled = pd.concat([new_data_num,new_data_cat], axis=1)                                                   
+
+max_height_prediction = float(model.predict(new_data_scaled)[0])
+
+#maxheight = joblib.load('max_height_full_pipeline.pkl')
+#max_height_prediction = maxheight.predict(new_data)
+
+st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
 
 # -- Filter -- 
 
