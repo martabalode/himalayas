@@ -167,5 +167,34 @@ def get_highest_peak(country):
         peak = df[df['Country'].str.lower() == 'other']['Highest_Peak_m']
     if not peak.empty:
         return peak.values[0]
+country_max_height = get_highest_peak(country)
 
-st.write(get_highest_peak(country))
+# Definition of new data for model 1 
+
+new_data = pd.DataFrame({
+    'mseason': [season],
+    'sex': [sex],
+    'country_max_height': [country_max_height],
+    'mo2used': [o2used],
+    'nb_members': [nb_members],
+    'pct_hired': [pct_hired],
+    'age': [age],
+})
+
+# Here we need to run model 1 to get max_height
+
+st.write(f"According to our analysis you will be able to climb up to {output_model_1} meters!")
+
+#  Definition of new data for model 2
+
+new_data = pd.DataFrame({
+    'mseason': [season],
+    'sex': [sex],
+    'country_max_height': [country_max_height],
+    'mo2used': [o2used],
+    'nb_members': [nb_members],
+    'pct_hired': [pct_hired],
+    'age': [age],
+    'peakid': []
+})
+#st.write(country_max_height)
