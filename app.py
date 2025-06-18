@@ -10,9 +10,10 @@ try:
 except:
     #st.error("Please make sure that you only enter a number")
     st.stop()
-nb_members = int(st.text_input("How many people will join the expedition?"))
+nb_total = int(st.text_input("How many people will join the expedition?"))
 nb_hired = int(st.text_input("How many of those are hired staff?"))
 pct_hired= int(nb_hired)/int(nb_members)
+nb_members = int(nb_total) - int(nb_hired)
 
 season_list = ["Spring", "Summer", "Autumn", "Winter"]
 with st.container(border=True):
