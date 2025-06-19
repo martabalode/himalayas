@@ -387,19 +387,27 @@ if st.button("🚀 Confirm and Continue"):
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
-    label_1 = float(output.iloc[0]['death_rate'])
+    dr_1 = float(output.iloc[0]['death_rate'])
+    dr_2 = float(output.iloc[1][ 'death_rate'])
+    dr_3 = float(output.iloc[2][ 'death_rate'])
+
+    sr_1 = float(output.iloc[0]['success_prob'])
+    sr_2 = float(output.iloc[1][ 'success_prob'])
+    sr_3 = float(output.iloc[2][ 'success_prob'])
+    
+    label_1 = f"{dr_1:.2%}"
     main_1 = output.iloc[0]['pkname']
-    note_1 = float(output.iloc[0]['success_prob'])
+    note_1 = f"{sr_1:.0%}"
     note_1_1 = int(output.iloc[0]['heightm'])
     
-    label_2 = float(output.iloc[1][ 'death_rate'])
+    label_2 = f"{dr_2:.2%}"
     main_2 = output.iloc[1][ 'pkname']
-    note_2 = float(output.iloc[1][ 'success_prob'])
+    note_2 = f"{sr_2:.0%}"
     note_2_1 =  int(output.iloc[1][ 'heightm'])
     
-    label_3 = float(output.iloc[2][ 'death_rate'])
+    label_3 = f"{dr_3:.2%}"
     main_3 = output.iloc[2][ 'pkname']
-    note_3 = float(output.iloc[2][ 'success_prob'])
+    note_3 = f"{sr_3:.0%}"
     note_3_1 = int(output.iloc[2][ 'heightm'])
     
     # Display in columns
@@ -441,10 +449,9 @@ if st.button("🚀 Confirm and Continue"):
     #df_map=df.tail(3)
     mean_lat = output['latitude'].mean()
     mean_lon = output['longitude'].mean()
-
-    
+      
     import plotly.express as px
-    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_prob',color='success_prob',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
     fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
     fig.show()    
     st.plotly_chart(fig)
