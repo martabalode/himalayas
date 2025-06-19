@@ -53,12 +53,12 @@ with col3:
 
 # Add text as title with specific features
 st.markdown("""
-    <h2 style='text-align: center; color: #FFFFFF; font-family: Georgia;'>
+    <h2 style='text-align: center; color: #FFFFFF; '>
         Welcome to your expedition to the Himalayas! 🏔️
     </h2>
 """, unsafe_allow_html=True)
 
-st.markdown("<h3 style='color: white; font-family: Georgia;'>Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='color: white; '>Tell us a bit about yourself and we'll recommend the perfect mountain for you to climb according to your profile.</h3>", unsafe_allow_html=True)
 
 #st.image('climbing everest.jpg', caption="This could be you", use_container_width=True)
 
@@ -264,7 +264,10 @@ if st.button("🚀 Confirm and Continue"):
     # Only run this after the button is clicked
     st.write("Thanks! Processing your inputs...")
     # Definition of new data for model 1 
-    
+    ### Displaying results 
+    st.markdown("<h4 style='color: white; '>According to our model, you can tackle peaks of up to {country_max_height}.</h3>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: white; '>Taking your difficulty preferences into account, we can suggest you take a look at the following peaks. We have modelled your personalised probability of success for each of them!🎉</h3>", unsafe_allow_html=True)
+        
     new_data = pd.DataFrame({
         'mseason': [season],
         'sex': [sex],
@@ -379,8 +382,7 @@ if st.button("🚀 Confirm and Continue"):
     #st.write(f'{success_prob1}, {success_prob2}, {success_prob3}')
     
     
-    st.write(f"According to our analysis you can climb: ")
-
+    
     # output df
     output = pd.DataFrame()
     output["peakid"] = filter_output.peakid
@@ -401,6 +403,12 @@ if st.button("🚀 Confirm and Continue"):
     sr_1 = float(output.iloc[0]['success_prob'])
     sr_2 = float(output.iloc[1][ 'success_prob'])
     sr_3 = float(output.iloc[2][ 'success_prob'])
+
+    ##Adding and index column
+    label_i = "Death rate"
+    main_i = "Peak name"
+    note_i = "Success probability"
+    note_i_1 = "Height"
     
     label_1 = f"{dr_1:.2%}"
     main_1 = output.iloc[0]['pkname']
@@ -418,34 +426,44 @@ if st.button("🚀 Confirm and Continue"):
     note_3_1 = int(output.iloc[2][ 'heightm'])
     
     # Display in columns
-    col1, col2, col3 = st.columns(3)
-    
-    # First column
+    col1, col2, col3 , col4 = st.columns(4)
+
+    #index
     col1.markdown(f"""
+        <div style='text-align: center; line-height: 1.2;'>
+            <div style='color: red;'>{label_i}</div>
+            <div style='color: white; font-size: 28px; font-weight: bold;'>{main_i}</div>
+            <div style='color: white;'>{note_i_1} </div>
+            <div style='color: lime; font-size: 22px;'>{note_i}</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # First peak
+    col2.markdown(f"""
         <div style='text-align: center; line-height: 1.2;'>
             <div style='color: red;'>{label_1}</div>
             <div style='color: white; font-size: 28px; font-weight: bold;'>{main_1}</div>
-            <div style='color: white;'>{note_1_1}meters</div>
+            <div style='color: white;'>{note_1_1} meters</div>
             <div style='color: lime; font-size: 22px;'>{note_1}</div>
         </div>
     """, unsafe_allow_html=True)
     
-    # Second column
-    col2.markdown(f"""
+    # Second peak
+    col3.markdown(f"""
         <div style='text-align: center; line-height: 1.2;'>
             <div style='color: red;'>{label_2}</div>
             <div style='color: white; font-size: 28px; font-weight: bold;'>{main_2}</div>
-            <div style='color: white;'>{note_2_1}meters</div>
+            <div style='color: white;'>{note_2_1} meters</div>
             <div style='color: lime; font-size: 22px;'>{note_2}</div>
         </div>
     """, unsafe_allow_html=True)
     
-    # Third column
-    col3.markdown(f"""
+    # Third peak
+    col4.markdown(f"""
         <div style='text-align: center; line-height: 1.2;'>
             <div style='color: red;'>{label_3}</div>
             <div style='color: white; font-size: 28px; font-weight: bold;'>{main_3}</div>
-            <div style='color: white;'>{note_3_1}meters</div>
+            <div style='color: white;'>{note_3_1} meters</div>
             <div style='color: lime; font-size: 22px;'>{note_3}</div>
         </div>
     """, unsafe_allow_html=True)
