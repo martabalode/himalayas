@@ -270,7 +270,7 @@ if st.button("🚀 Confirm and Continue"):
 
     scaler_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler.joblib")
     encoder_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder (2).joblib")
-    model_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="model.joblib")
+    model_path = hf_hub_download(repo_id="martaimarta/himnew", filename="model.joblib")
 
     scaler = load(scaler_path)
     encoder = load(encoder_path) #'encoder (2).joblib'
