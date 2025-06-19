@@ -269,7 +269,7 @@ if st.button("🚀 Confirm and Continue"):
     # Here we need to run model 1 to get max_height
     
     scaler = load('scaler.joblib')
-    encoder = load('encoder (1).joblib')
+    encoder = load('encoder (2).joblib')
     model = load('model.joblib')
     
     new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
