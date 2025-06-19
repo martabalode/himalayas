@@ -375,7 +375,7 @@ if st.button("🚀 Confirm and Continue"):
 
     output["peakid"] = filter_output.peakid
     output.merge(
-        peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"],
+        peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]],
         on="peakid",
         how="inner"
         ).reset_index(drop=True)
