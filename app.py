@@ -376,7 +376,7 @@ if st.button("🚀 Confirm and Continue"):
     # output df
     output = pd.DataFrame()
     output["peakid"] = filter_output.peakid
-    output.merge(
+    output = output.merge(
         peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]],
         on="peakid",
         how="inner"
