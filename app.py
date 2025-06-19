@@ -444,7 +444,7 @@ if st.button("🚀 Confirm and Continue"):
 
     
     import plotly.express as px
-    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_rate',color='success_prob',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_prob',color='success_prob',hover_data='pkname',color_continuous_scale='RdYlGn',)
     fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
     fig.show()    
     st.plotly_chart(fig)
