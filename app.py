@@ -372,7 +372,7 @@ if st.button("🚀 Confirm and Continue"):
     st.write(f"According to our analysis you can climb: ")
 
     # output df
-
+    output = pd.DataFrame()
     output["peakid"] = filter_output.peakid
     output.merge(
         peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]],
