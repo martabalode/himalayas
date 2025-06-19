@@ -43,7 +43,14 @@ def background_image_style(path):
 # Apply background image
 st.markdown(background_image_style("climbing everest.jpg"), unsafe_allow_html=True)
 #Add logo
-st.image('TrailError_logo_white.png', width=250)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    st.empty()
+with col2:
+    st.image("TrailError_logo_white.png", width=300)
+with col3:
+    st.empty()
+
 # Add text as title with specific features
 st.markdown("""
     <h2 style='text-align: center; color: #FFFFFF; font-family: Georgia;'>
