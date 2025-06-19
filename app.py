@@ -366,7 +366,7 @@ if st.button("🚀 Confirm and Continue"):
     success_prob1 = success_prob[0]
     success_prob2 = success_prob[1]
     success_prob3 = success_prob[2]
-    st.write(f'{success_prob1}, {success_prob2}, {success_prob3}')
+    #st.write(f'{success_prob1}, {success_prob2}, {success_prob3}')
     
     
     st.write(f"According to our analysis you can climb: ")
@@ -392,7 +392,7 @@ if st.button("🚀 Confirm and Continue"):
     label_2 = output.iloc[1][ 'death_rate']
     main_2 = output.iloc[1][ 'pkname']
     note_2 = output.iloc[1][ 'success_prob']
-    note_2_1 = output.iloc[1][ 'heightm']
+    note_2_1 =  output.iloc[1][ 'heightm']
     
     label_3 = output.iloc[2][ 'death_rate']
     main_3 = output.iloc[2][ 'pkname']
@@ -434,13 +434,13 @@ if st.button("🚀 Confirm and Continue"):
 
 
      ### Add map
-    df_map=pd.read_csv('peak_coord_complete.csv') #this will be replaced with the df output
-    df_map=df.tail(3)
-    mean_lat = df_map['latitude'].mean()
-    mean_lon = df_map['longitude'].mean()
+    #df_map=pd.read_csv('peak_coord_complete.csv') #this will be replaced with the df output
+    #df_map=df.tail(3)
+    mean_lat = output['latitude'].mean()
+    mean_lon = output['longitude'].mean()
       
     import plotly.express as px
-    fig=px.scatter_map(df_map,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
     fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
     fig.show()    
     st.plotly_chart(fig)
