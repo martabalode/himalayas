@@ -63,7 +63,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
+st.image('TrailError_logo_white.png')
 age = st.text_input("How old are you?")
 try:
     age = int(age)
