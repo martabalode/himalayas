@@ -384,20 +384,20 @@ if st.button("🚀 Confirm and Continue"):
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
-    label_1 = "output.iloc[0][ 'death_rate']"
-    main_1 = "output.iloc[0][ 'pkname']"
-    note_1 = "output.iloc[0][ 'success_prob']"
-    note_1_1 = "output.iloc[0][ 'heightm']"
+    label_1 = output.iloc[0][ 'death_rate']
+    main_1 = output.iloc[0][ 'pkname']
+    note_1 = output.iloc[0][ 'success_prob']
+    note_1_1 = output.iloc[0][ 'heightm']
     
-    label_2 = "output.iloc[1][ 'death_rate']"
-    main_2 = "output.iloc[1][ 'pkname']"
-    note_2 = "output.iloc[1][ 'success_prob']"
-    note_2_1 =  "output.iloc[1][ 'heightm']"
+    label_2 = output.iloc[1][ 'death_rate']
+    main_2 = output.iloc[1][ 'pkname']
+    note_2 = output.iloc[1][ 'success_prob']
+    note_2_1 = output.iloc[1][ 'heightm']
     
-    label_3 = "output.iloc[2][ 'death_rate']"
-    main_3 = "output.iloc[2][ 'pkname']"
-    note_3 = "output.iloc[2][ 'success_prob']"
-    note_3_1 = "output.iloc[2][ 'heightm']"
+    label_3 = output.iloc[2][ 'death_rate']
+    main_3 = output.iloc[2][ 'pkname']
+    note_3 = output.iloc[2][ 'success_prob']
+    note_3_1 = output.iloc[2][ 'heightm']
     
     # Display in columns
     col1, col2, col3 = st.columns(3)
