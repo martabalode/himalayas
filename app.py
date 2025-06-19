@@ -381,9 +381,14 @@ if st.button("🚀 Confirm and Continue"):
         ).reset_index(drop=True)
     output["success_prob"] = success_prob
 
+    print("OUTPUT")
     print(output)
     print(type(output))
     print(len(output))
+
+    print("peak_filter")
+    print(peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]])
+    print(len(peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]]))
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
