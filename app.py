@@ -384,20 +384,20 @@ if st.button("🚀 Confirm and Continue"):
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
-    label_1 = output.death_rate.iloc[0]
-    main_1 = output.pkname.iloc[0]
-    note_1 = output.success_prob.iloc[0]
-    note_1_1 = output.heightm.iloc[0]
+    label_1 = "output.iloc[0][ 'death_rate']"
+    main_1 = "output.iloc[0][ 'pkname']"
+    note_1 = "output.iloc[0][ 'success_prob']"
+    note_1_1 = "output.iloc[0][ 'heightm']"
     
-    label_2 = output.death_rate.iloc[1]
-    main_2 = output.pkname.iloc[1]
-    note_2 = output.success_prob.iloc[1]
-    note_2_1 = output.heightm.iloc[1]
+    label_2 = "output.iloc[1][ 'death_rate']"
+    main_2 = "output.iloc[1][ 'pkname']"
+    note_2 = "output.iloc[1][ 'success_prob']"
+    note_2_1 =  "output.iloc[1][ 'heightm']"
     
-    label_3 = output.death_rate.iloc[2]
-    main_3 = output.pkname.iloc[2]
-    note_3 = output.success_prob.iloc[2]
-    note_3_1 = output.heightm.iloc[2]
+    label_3 = "output.iloc[2][ 'death_rate']"
+    main_3 = "output.iloc[2][ 'pkname']"
+    note_3 = "output.iloc[2][ 'success_prob']"
+    note_3_1 = "output.iloc[2][ 'heightm']"
     
     # Display in columns
     col1, col2, col3 = st.columns(3)
@@ -431,3 +431,16 @@ if st.button("🚀 Confirm and Continue"):
             <div style='color: green; font-size: 22px;'>{note_3}</div>
         </div>
     """, unsafe_allow_html=True)
+
+
+     ### Add map
+    df_map=pd.read_csv('peak_coord_complete.csv') #this will be replaced with the df output
+    df_map=df.tail(3)
+    mean_lat = df_map['latitude'].mean()
+    mean_lon = df_map['longitude'].mean()
+      
+    import plotly.express as px
+    fig=px.scatter_map(df_map,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
+    fig.show()    
+    st.plotly_chart(fig)
