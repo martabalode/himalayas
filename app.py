@@ -317,12 +317,6 @@ if st.button("🚀 Confirm and Continue"):
     
     filter_output = filter(max_height_prediction, user_diff_cat)
     
-    # Dealing with results with less than 3 outputs
-    
-    #if len(filter_output) != 0:           
-    #    filter_output
-    #else:
-    #    st.write("No peaks match the selected criteria")
     
     #  Definition of new data for model 2
     
@@ -373,6 +367,7 @@ if st.button("🚀 Confirm and Continue"):
 
     # output df
 
+    output = pd.DataFrame()
     output["peakid"] = filter_output.peakid
     output.merge(
         peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]],
