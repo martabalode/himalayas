@@ -72,13 +72,13 @@ except:
     st.stop()
 
 
-nb_total = st.text_input("How many people will join the expedition?")
+nb_total = st.text_input("How many people will join the expedition \(Successful expeditions have around 32 climbers\)?")
 try:
     nb_total = int(nb_total)
 except:
     st.stop()
 
-nb_hired = st.text_input("How many of those are hired staff?")
+nb_hired = st.text_input("How many of those are hired staff \(Successful expeditions have a ratio of about 50% hired staff\)?")
 try:
     nb_hired = int(nb_hired)
 except:
