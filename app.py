@@ -270,9 +270,10 @@ if st.button("🚀 Confirm and Continue"):
     
     # Here we need to run model 1 to get max_height
 
-    scaler_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler.joblib",  token="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")
-    encoder_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder (2).joblib",token="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")
-    model_path = hf_hub_download(repo_id="martaimarta/himnew", filename="model.joblib", token="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")
+    token = st.secrets["huggingface"]["token"]
+    scaler_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler.joblib",  token=token)
+    encoder_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder (2).joblib",token=token)
+    model_path = hf_hub_download(repo_id="martaimarta/himnew", filename="model.joblib", token=token)
 
     scaler = load(scaler_path)
     encoder = load(encoder_path) #'encoder (2).joblib'
@@ -348,9 +349,9 @@ if st.button("🚀 Confirm and Continue"):
 
 
 
-    scaler_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler2.joblib",token="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")
-    encoder_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder2.joblib",token="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")
-    model_path2 = hf_hub_download(repo_id="martaimarta/himnew", filename="model2.joblib",token="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")
+    scaler_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler2.joblib",token=token)
+    encoder_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder2.joblib",token=token)
+    model_path2 = hf_hub_download(repo_id="martaimarta/himnew", filename="model2.joblib",token=token)
 
     scaler2 = load(scaler_path2)
     encoder2 = load(encoder_path2) #'encoder (2).joblib'
