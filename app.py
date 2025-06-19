@@ -441,9 +441,10 @@ if st.button("🚀 Confirm and Continue"):
     #df_map=df.tail(3)
     mean_lat = output['latitude'].mean()
     mean_lon = output['longitude'].mean()
-      
+
+    
     import plotly.express as px
-    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_rate',color='success_prob',hover_data='pkname',color_continuous_scale='RdYlGn',)
     fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
     fig.show()    
     st.plotly_chart(fig)
