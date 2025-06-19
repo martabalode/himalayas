@@ -289,7 +289,7 @@ if st.button("🚀 Confirm and Continue"):
     
     # -- Filter -- 
     
-    peak_filter = pd.read_csv("peak_filter.csv", index_col=0)
+    peak_filter = pd.read_csv("peak_coord_complete.csv")
     
     # function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
     
@@ -370,6 +370,17 @@ if st.button("🚀 Confirm and Continue"):
     
     
     st.write(f"According to our analysis you can climb: ")
+
+    # output df
+
+    output["peakid"] = filter_output.peakid
+    output.merge(
+        peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"],
+        on="peakid",
+        how="inner"
+        ).reset_index(drop=True)
+    output["success_prob"] = success_prob
+
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
