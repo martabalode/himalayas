@@ -373,20 +373,20 @@ if st.button("🚀 Confirm and Continue"):
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
-    label_1 = "death_peak_1"
-    main_1 = "name_peak_1"
-    note_1 = "success_peak_1"
-    note_1_1 = "height_peak_1"
+    label_1 = "output.iloc[0][ 'death_rate']"
+    main_1 = "output.iloc[0][ 'pkname']"
+    note_1 = "output.iloc[0][ 'success_prob']"
+    note_1_1 = "output.iloc[0][ 'heightm']"
     
-    label_2 = "death_peak_2"
-    main_2 = "name_peak_2"
-    note_2 = "success_peak_2"
-    note_2_1 = "height_peak_2"
+    label_2 = "output.iloc[1][ 'death_rate']"
+    main_2 = "output.iloc[1][ 'pkname']"
+    note_2 = "output.iloc[1][ 'success_prob']"
+    note_2_1 =  "output.iloc[1][ 'heightm']"
     
-    label_3 = "death_peak_3"
-    main_3 = "name_peak_3"
-    note_3 = "success_peak_3"
-    note_3_1 = "height_peak_3"
+    label_3 = "output.iloc[2][ 'death_rate']"
+    main_3 = "output.iloc[2][ 'pkname']"
+    note_3 = "output.iloc[2][ 'success_prob']"
+    note_3_1 = "output.iloc[2][ 'heightm']"
     
     # Display in columns
     col1, col2, col3 = st.columns(3)
@@ -420,3 +420,16 @@ if st.button("🚀 Confirm and Continue"):
             <div style='color: green; font-size: 22px;'>{note_3}</div>
         </div>
     """, unsafe_allow_html=True)
+
+
+     ### Add map
+    df_map=pd.read_csv('peak_coord_complete.csv') #this will be replaced with the df output
+    df_map=df.tail(3)
+    mean_lat = df_map['latitude'].mean()
+    mean_lon = df_map['longitude'].mean()
+      
+    import plotly.express as px
+    fig=px.scatter_map(df_map,lat='latitude', lon= 'longitude',size='success_rate',color='success_rate',hover_data='pkname',color_continuous_scale='RdYlGn',)
+    fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
+    fig.show()    
+    st.plotly_chart(fig)
