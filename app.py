@@ -5,7 +5,7 @@ import joblib
 from joblib import load
 import pickle 
 import sys
-
+from huggingface_hub import hf_hub_download
 
 
 ### Making all text white 
@@ -267,10 +267,16 @@ if st.button("🚀 Confirm and Continue"):
     })
     
     # Here we need to run model 1 to get max_height
+
+    scaler_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler.joblib")
+    encoder_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder (2).joblib")
+    model_path = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="model.joblib")
+
+    scaler = load(scaler_path)
+    encoder = load(encoder_path) #'encoder (2).joblib'
+    model = load(model_path)
+
     
-    scaler = load('scaler.joblib')
-    encoder = load('encoder (2).joblib')
-    model = load('model.joblib')
     
     new_data_num = scaler.transform(new_data.select_dtypes(include="number"))
     new_data_cat = encoder.transform(new_data.select_dtypes(exclude="number"))
@@ -337,9 +343,22 @@ if st.button("🚀 Confirm and Continue"):
     data_to_model_2["peakid"] = peakid_var["peakid"]
     
     #instantiating model2
-    scaler2 = load('scaler2.joblib')
-    encoder2 = load('encoder2.joblib')
-    model2 = load('model2.joblib')
+
+
+
+    scaler_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="scaler2.joblib")
+    encoder_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="encoder2.joblib")
+    model_path2 = hf_hub_download(repo_id="martaimarta/himalayamodels", filename="model2.joblib")
+
+    scaler2 = load(scaler_path2)
+    encoder2 = load(encoder_path2) #'encoder (2).joblib'
+    model2 = load(model_path2)
+
+
+
+
+
+    
     model2_num = scaler2.transform(data_to_model_2.select_dtypes(include="number"))
     model2_cat = encoder2.transform(data_to_model_2.select_dtypes(exclude="number"))
     data_to_model_2_scaled = pd.concat([model2_num,model2_cat], axis=1)
