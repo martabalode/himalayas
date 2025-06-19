@@ -42,6 +42,8 @@ def background_image_style(path):
 
 # Apply background image
 st.markdown(background_image_style("climbing everest.jpg"), unsafe_allow_html=True)
+#Add logo
+st.image('TrailError_logo_white.png', width=250)
 # Add text as title with specific features
 st.markdown("""
     <h2 style='text-align: center; color: #FFFFFF; font-family: Georgia;'>
@@ -63,7 +65,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.image('TrailError_logo_white.png')
+
 age = st.text_input("How old are you?")
 try:
     age = int(age)
@@ -381,14 +383,6 @@ if st.button("🚀 Confirm and Continue"):
         ).reset_index(drop=True)
     output["success_prob"] = success_prob
 
-    print("OUTPUT")
-    print(output)
-    print(type(output))
-    print(len(output))
-
-    print("peak_filter")
-    print(peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]])
-    print(len(peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"]]))
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
