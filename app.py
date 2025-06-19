@@ -289,7 +289,7 @@ if st.button("🚀 Confirm and Continue"):
     
     # -- Filter -- 
     
-    peak_filter = pd.read_csv("peak_filter.csv", index_col=0)
+    peak_filter = pd.read_csv("peak_coord_complete.csv")
     
     # function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
     
@@ -370,23 +370,34 @@ if st.button("🚀 Confirm and Continue"):
     
     
     st.write(f"According to our analysis you can climb: ")
+
+    # output df
+
+    output["peakid"] = filter_output.peakid
+    output.merge(
+        peak_filter[["peakid", "pkname", "heightm", "death_rate", "latitude", "longitude"],
+        on="peakid",
+        how="inner"
+        ).reset_index(drop=True)
+    output["success_prob"] = success_prob
+
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
-    label_1 = "death_peak_1"
-    main_1 = "name_peak_1"
-    note_1 = "success_peak_1"
-    note_1_1 = "height_peak_1"
+    label_1 = output.death_rate.iloc[0]
+    main_1 = output.pkname.iloc[0]
+    note_1 = output.success_prob.iloc[0]
+    note_1_1 = output.heightm.iloc[0]
     
-    label_2 = "death_peak_2"
-    main_2 = "name_peak_2"
-    note_2 = "success_peak_2"
-    note_2_1 = "height_peak_2"
+    label_2 = output.death_rate.iloc[1]
+    main_2 = output.pkname.iloc[1]
+    note_2 = output.success_prob.iloc[1]
+    note_2_1 = output.heightm.iloc[1]
     
-    label_3 = "death_peak_3"
-    main_3 = "name_peak_3"
-    note_3 = "success_peak_3"
-    note_3_1 = "height_peak_3"
+    label_3 = output.death_rate.iloc[2]
+    main_3 = output.pkname.iloc[2]
+    note_3 = output.success_prob.iloc[2]
+    note_3_1 = output.heightm.iloc[2]
     
     # Display in columns
     col1, col2, col3 = st.columns(3)
