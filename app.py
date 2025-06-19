@@ -381,6 +381,9 @@ if st.button("🚀 Confirm and Continue"):
         ).reset_index(drop=True)
     output["success_prob"] = success_prob
 
+    print(output)
+    print(type(output))
+    print(len(output))
     
     ### Printing output, we will just need to feed the labels with the right variables 
 
