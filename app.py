@@ -264,10 +264,12 @@ if st.button("🚀 Confirm and Continue"):
     # Only run this after the button is clicked
     st.write("Thanks! Processing your inputs...")
     # Definition of new data for model 1 
+
     ### Displaying results 
     st.markdown(f"<h4 style='color: white; '>According to our model, you can tackle peaks of up to {country_max_height}.</h3>", unsafe_allow_html=True)
     st.markdown("<h4 style='color: white; '>Taking your difficulty preferences into account, we can suggest you take a look at the following peaks. We have modelled your personalised probability of success for each of them!🎉</h3>", unsafe_allow_html=True)
         
+
     new_data = pd.DataFrame({
         'mseason': [season],
         'sex': [sex],
@@ -301,7 +303,10 @@ if st.button("🚀 Confirm and Continue"):
     #st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
     
     # -- Filter -- 
-    
+    ### Displaying results 
+    st.markdown("<h4 style='color: white; '>According to our model, you can tackle peaks of up to {max_height_prediction}.</h3>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: white; '>Taking your difficulty preferences into account, we can suggest you take a look at the following peaks. We have modelled your personalised probability of success for each of them!🎉</h3>", unsafe_allow_html=True)
+  
     peak_filter = pd.read_csv("peak_coord_complete.csv")
     
     # function to categorize peaks and return a df with a single column "pkname" with the names of the peaks in the user category.
