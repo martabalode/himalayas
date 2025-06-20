@@ -265,7 +265,7 @@ if st.button("🚀 Confirm and Continue"):
     st.write("Thanks! Processing your inputs...")
     # Definition of new data for model 1 
     ### Displaying results 
-    st.markdown("<h4 style='color: white; '>According to our model, you can tackle peaks of up to {country_max_height}.</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='color: white; '>According to our model, you can tackle peaks of up to {country_max_height}.</h3>", unsafe_allow_html=True)
     st.markdown("<h4 style='color: white; '>Taking your difficulty preferences into account, we can suggest you take a look at the following peaks. We have modelled your personalised probability of success for each of them!🎉</h3>", unsafe_allow_html=True)
         
     new_data = pd.DataFrame({
@@ -298,7 +298,7 @@ if st.button("🚀 Confirm and Continue"):
     
     max_height_prediction = int(model.predict(new_data_scaled)[0])
     
-    st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
+    #st.write(f"According to our analysis you will be able to climb up to {max_height_prediction} meters!")
     
     # -- Filter -- 
     
@@ -478,5 +478,6 @@ if st.button("🚀 Confirm and Continue"):
     import plotly.express as px
     fig=px.scatter_map(output,lat='latitude', lon= 'longitude',size='success_prob',color='success_prob',hover_data='pkname',color_continuous_scale='RdYlGn',)
     fig.update_layout(map_style="open-street-map", mapbox_center={"lat": mean_lat, "lon": mean_lon})
+    fig.update_coloraxes(colorbar_title="Your success probability")
     fig.show()    
     st.plotly_chart(fig)
