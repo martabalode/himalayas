@@ -117,13 +117,13 @@ difficulty_list = ["Easy","Medium", "Hard", "Extreme" ]
 with st.container(border=True):
     difficulty = st.selectbox ("Difficulty level", difficulty_list)
 if difficulty == "Easy":
-    user_diff_cat = 1
-if difficulty == "Medium":
-    user_diff_cat = 2
-if difficulty == "Hard":
-    user_diff_cat = 3
-if difficulty == "Extreme":
     user_diff_cat = 4
+if difficulty == "Medium":
+    user_diff_cat = 3
+if difficulty == "Hard":
+    user_diff_cat = 2
+if difficulty == "Extreme":
+    user_diff_cat = 1
 
 Country = ['Other',
  'Afghanistan',
